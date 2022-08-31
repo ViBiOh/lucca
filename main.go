@@ -56,7 +56,6 @@ const (
 	dateISOFormat = "2006-01-02"
 
 	baseURL       = "https://%s.ilucca.net"
-	loginURL      = baseURL + "/identity/login"
 	csrfTokenName = "__RequestVerificationToken"
 
 	antiForgeryPrefix   = ".AspNetCore.Antiforgery"
@@ -93,12 +92,14 @@ func main() {
 
 	recurringDays := parseDaysOfWeek(*days)
 
-	authToken, err := getAuthToken(*username, *password)
+	req := request.Get(fmt.Sprintf(baseURL, *subdomain))
+
+	authToken, err := getAuthToken(req, *username, *password)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	req := request.Get(fmt.Sprintf(baseURL, *subdomain)).Header("Cookie", fmt.Sprintf("%s=%s", authTokenCookieName, authToken))
+	req = req.Header("Cookie", fmt.Sprintf("%s=%s", authTokenCookieName, authToken))
 
 	ownerID, err := getOwnerId(req)
 	if err != nil {
@@ -168,8 +169,9 @@ func getLeaveRequestType(req request.Request, ownerID int, date, name string) (i
 	return 0, fmt.Errorf("leave type `%s` not found", name)
 }
 
-func getAuthToken(username, password string) (string, error) {
-	resp, err := request.Get(loginURL).Send(context.Background(), nil)
+func getAuthToken(req request.Request, username, password string) (string, error) {
+	req = req.Path("/identity/login")
+	resp, err := req.Send(context.Background(), nil)
 	if err != nil {
 		return "", fmt.Errorf("get login: %w", err)
 	}
@@ -196,7 +198,7 @@ func getAuthToken(username, password string) (string, error) {
 		}
 	}
 
-	resp, err = request.Post(loginURL).Header("Cookie", antiforgeryCookie).Form(context.Background(), loginForm)
+	resp, err = req.Method(http.MethodPost).Header("Cookie", antiforgeryCookie).Form(context.Background(), loginForm)
 	if err != nil {
 		return "", fmt.Errorf("login: %w", err)
 	}
