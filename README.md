@@ -1,14 +1,27 @@
 # remote-lucca
 
+## Getting started
+
+### Release
+
+Download the latest binary for your os and architecture from the [GitHub Releases page](https://github.com/ViBiOh/remote-lucca/releases)
+
 ```bash
-go run main.go \
-  -subdomain company \
-  -days Monday,Friday \
-  -start 2022-09-01 \
-  -end 2022-10-01 \
-  -username username@company.com \
-  -password "USE_A_PASSWORD_MANAGER_PLEASE" \
-  -dry-run
+curl \
+  --disable \
+  --silent \
+  --show-error \
+  --location \
+  --max-time 300 \
+  --output "/usr/local/bin/remote-lucca"
+  https://github.com/ViBiOh/remote-lucca/releases/download/v0.0.1/remote-lucca_$(uname -s | tr "[:upper:]" "[:lower:]")_amd64
+chmod +x "/usr/local/bin/remote-lucca"
+```
+
+### Golang
+
+```bash
+go install "github.com/ViBiOh/remote-lucca@latest"
 ```
 
 ## Usage
@@ -31,4 +44,17 @@ Usage of remote-lucca:
         Sub domain used
   -username string
         Username
+```
+
+### Example
+
+```bash
+go run main.go \
+  -subdomain company \
+  -days Monday,Friday \
+  -start 2022-09-01 \
+  -end 2022-10-01 \
+  -username username@company.com \
+  -password "USE_A_PASSWORD_MANAGER_PLEASE" \
+  -dry-run
 ```
