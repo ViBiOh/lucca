@@ -14,7 +14,7 @@ curl \
   --location \
   --max-time 300 \
   --output "/usr/local/bin/remote-lucca"
-  https://github.com/ViBiOh/remote-lucca/releases/download/v0.0.1/remote-lucca_$(uname -s | tr "[:upper:]" "[:lower:]")_amd64
+  https://github.com/ViBiOh/remote-lucca/releases/download/v0.0.2/remote-lucca_$(uname -s | tr "[:upper:]" "[:lower:]")_amd64
 chmod +x "/usr/local/bin/remote-lucca"
 ```
 
