@@ -7,7 +7,3 @@ bin/
 release/
 coverage.*
 profile.out
-
-# Files
-ca-certificates.crt
-zoneinfo.zip
