@@ -41,6 +41,7 @@ jobs:
       - name: Assets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GO_ARCHS: darwin/amd64 darwin/arm64 linux/amd64 linux/arm linux/arm64 windows/amd64 windows/arm64
         run: |
           curl --disable --silent --show-error --location --max-time 30 "https://raw.githubusercontent.com/ViBiOh/scripts/main/bootstrap" | bash -s -- "-c" "release"
           export GIT_TAG="$(basename ${{ github.ref }})"
