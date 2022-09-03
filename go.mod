@@ -2,7 +2,7 @@ module github.com/ViBiOh/remote-lucca
 
 go 1.19
 
-require github.com/ViBiOh/httputils/v4 v4.47.0
+require github.com/ViBiOh/httputils/v4 v4.47.2
 
 require (
 	github.com/ViBiOh/flags v1.2.0 // indirect
