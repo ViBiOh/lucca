@@ -22,8 +22,8 @@ type ownerReponse struct {
 }
 
 type leaveAccount struct {
-	LeaveAccountID   int     `json:"leaveAccountId"`
 	LeaveAccountName string  `json:"leaveAccountName"`
+	LeaveAccountID   int     `json:"leaveAccountId"`
 	Duration         float64 `json:"duration"`
 	Unit             int     `json:"unit"`
 }
@@ -37,19 +37,19 @@ type users struct {
 }
 
 type leaveRequestRequest struct {
-	DaysUnit               bool           `json:"daysUnit"`
-	Duration               float64        `json:"duration"`
-	OwnerID                int            `json:"ownerId"`
 	StartOn                string         `json:"startsOn"`
 	EndsOn                 string         `json:"endsOn"`
-	StartsAM               bool           `json:"startsAM"`
+	AvailableAccounts      []string       `json:"availableAccounts"`
+	Users                  users          `json:"users"`
+	OtherAvailableAccounts []leaveAccount `json:"otherAvailableAccounts"`
+	Unit                   int            `json:"unit"`
+	OwnerID                int            `json:"ownerId"`
+	Duration               float64        `json:"duration"`
 	EndsAM                 bool           `json:"endsAM"`
 	IsHalfDay              bool           `json:"isHalfDay"`
 	AutoCreate             bool           `json:"autoCreate"`
-	Unit                   int            `json:"unit"`
-	AvailableAccounts      []string       `json:"availableAccounts"`
-	OtherAvailableAccounts []leaveAccount `json:"otherAvailableAccounts"`
-	Users                  users          `json:"users"`
+	DaysUnit               bool           `json:"daysUnit"`
+	StartsAM               bool           `json:"startsAM"`
 }
 
 const (
