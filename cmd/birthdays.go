@@ -13,10 +13,10 @@ type Birthdays struct {
 	Data struct {
 		Items []struct {
 			BirthDate string `json:"birthDate"`
-			ID        int    `json:"id"`
 			Name      string `json:"name"`
 			FirstName string `json:"firstName"`
 			LastName  string `json:"lastName"`
+			ID        int    `json:"id"`
 		} `json:"items"`
 	} `json:"data"`
 }

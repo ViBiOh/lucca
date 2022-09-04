@@ -10,10 +10,10 @@ import (
 )
 
 type Principal struct {
-	ID        int    `json:"id"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Mail      string `json:"mail"`
+	ID        int    `json:"id"`
 }
 
 func getPrincipal(req request.Request) (output Principal, err error) {
