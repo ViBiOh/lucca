@@ -43,7 +43,7 @@ var birthdaysCmd = &cobra.Command{
 
 			if len(birthday.BirthDate) > 0 {
 				if dateOfBirth, err := time.Parse(dateISOFormat+"T00:00:00", birthday.BirthDate); err == nil {
-					fmt.Printf("- %d years", now.Year()-dateOfBirth.Year())
+					fmt.Printf(" - %d years", now.Year()-dateOfBirth.Year())
 				}
 			}
 
