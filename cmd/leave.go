@@ -182,7 +182,7 @@ func parseDaysOfWeek(days []string) (output []time.Weekday) {
 }
 
 func getLeaveRequestType(req request.Request, ownerID int, date, name string) (int, error) {
-	resp, err := req.Path(fmt.Sprintf("/api/v3/services/leaveRequestFactory?ownerId=%d&startsOn=%s&startsAM=true&endsOn=%s&endsAM=false", ownerID, date, date)).Send(context.Background(), nil)
+	resp, err := req.Path("/api/v3/services/leaveRequestFactory?ownerId=%d&startsOn=%s&startsAM=true&endsOn=%s&endsAM=false", ownerID, date, date).Send(context.Background(), nil)
 	if err != nil {
 		return 0, fmt.Errorf("get: %w", err)
 	}
