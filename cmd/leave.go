@@ -13,7 +13,8 @@ import (
 )
 
 var (
-	dateISOFormat = "2006-01-02"
+	dateISOFormat  = "2006-01-02"
+	dateTimeFormat = "2006-01-02T00:00:00"
 
 	leaveType string
 	days      []string
@@ -121,8 +122,8 @@ func createLeaveRequest(req request.Request, ownerID, leaveRequestTpe int, date 
 		DaysUnit:          true,
 		Duration:          1,
 		OwnerID:           ownerID,
-		StartOn:           date.Format(dateISOFormat) + "T00:00:00",
-		EndsOn:            date.Format(dateISOFormat) + "T00:00:00",
+		StartOn:           date.Format(dateTimeFormat),
+		EndsOn:            date.Format(dateTimeFormat),
 		StartsAM:          true,
 		EndsAM:            false,
 		IsHalfDay:         false,
