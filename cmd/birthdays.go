@@ -58,12 +58,10 @@ var birthdaysCmd = &cobra.Command{
 		}
 
 		items := birthdays.Data.Items
-		for index, item := range items {
-			if date, err := time.Parse(dateTimeFormat, item.BirthDate); err == nil {
-				item.Date = date
-				item.BirthdayThisYear = time.Date(now.Year(), date.Month(), date.Day(), 0, 0, 0, 0, time.UTC)
-
-				items[index] = item
+		for index := range items {
+			if date, err := time.Parse(dateTimeFormat, items[index].BirthDate); err == nil {
+				items[index].Date = date
+				items[index].BirthdayThisYear = time.Date(now.Year(), date.Month(), date.Day(), 0, 0, 0, 0, time.UTC)
 			}
 		}
 
