@@ -3,7 +3,7 @@ module github.com/ViBiOh/remote-lucca
 go 1.19
 
 require (
-	github.com/ViBiOh/httputils/v4 v4.47.7
+	github.com/ViBiOh/httputils/v4 v4.47.8
 	github.com/spf13/cobra v1.5.0
 )
 
