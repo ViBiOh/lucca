@@ -1,4 +1,4 @@
-package cmd
+package cli
 
 import (
 	"context"
@@ -7,20 +7,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ViBiOh/httputils/v4/pkg/httpjson"
+	"github.com/ViBiOh/remote-lucca/pkg/lucca"
 	"github.com/spf13/cobra"
 )
 
 type Birthday struct {
-	BirthDate         string `json:"birthDate"`
-	ContractStartDate string `json:"dtContractStart"`
-	BirthdayThisYear  time.Time
-	Date              time.Time
-	ContractStart     time.Time
-	Name              string `json:"name"`
-	FirstName         string `json:"firstName"`
-	LastName          string `json:"lastName"`
-	ID                int    `json:"id"`
+	lucca.Birthday
+	BirthdayThisYear time.Time
 }
 
 type Birthdays struct {
@@ -42,37 +35,34 @@ var birthdaysCmd = &cobra.Command{
 	Use:   "birthdays",
 	Short: "Birthdays of the day",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		now := time.Date(2024, 2, 28, 9, 0, 0, 0, time.UTC)
-		start := now.Format(dateISOFormat)
-		end := now.Format(dateISOFormat)
+		now := time.Now()
+		start := now
+		end := now
 
 		if now.Weekday() == time.Monday {
-			start = now.AddDate(0, 0, -2).Format(dateISOFormat)
+			start = now.AddDate(0, 0, -2)
 		}
 
 		if now.Month() == time.February && now.Day() == 28 && now.AddDate(0, 0, 1).Month() == time.March {
-			end = now.AddDate(0, 0, 1).Format(dateISOFormat)
+			end = now.AddDate(0, 0, 1)
 		}
 
-		response, err := req.Path("/api/v3/users/birthday?fields=id,name,firstname,lastname,birthDate,dtContractStart&startsOn=%s&endsOn=%s", start, end).Send(context.Background(), nil)
+		birthdays, err := luccaClient.GetBirthdays(context.Background(), start, end)
 		if err != nil {
 			return fmt.Errorf("get birthdays: %w", err)
 		}
 
-		var birthdays Birthdays
-		if err = httpjson.Read(response, &birthdays); err != nil {
-			return fmt.Errorf("read birthdays: %w", err)
-		}
+		items := make([]Birthday, len(birthdays))
+		for index, birthday := range birthdays {
+			var birthdayThisYear time.Time
 
-		items := birthdays.Data.Items
-		for index := range items {
-			if date, err := time.Parse(dateTimeFormat, items[index].BirthDate); err == nil {
-				items[index].Date = date
-				items[index].BirthdayThisYear = time.Date(now.Year(), date.Month(), date.Day(), 0, 0, 0, 0, time.UTC)
+			if !birthday.Date.IsZero() {
+				birthdayThisYear = time.Date(now.Year(), birthday.Date.Month(), birthday.Date.Day(), 0, 0, 0, 0, time.UTC)
 			}
 
-			if date, err := time.Parse(dateTimeFormat, items[index].ContractStartDate); err == nil {
-				items[index].ContractStart = date
+			items[index] = Birthday{
+				Birthday:         birthday,
+				BirthdayThisYear: birthdayThisYear,
 			}
 		}
 

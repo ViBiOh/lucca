@@ -1,17 +1,17 @@
-package cmd
+package lucca
 
 import (
 	"context"
 	"errors"
+	"flag"
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 	"regexp"
 	"strings"
 
+	"github.com/ViBiOh/flags"
 	"github.com/ViBiOh/httputils/v4/pkg/request"
-	"github.com/spf13/cobra"
 )
 
 const (
@@ -22,46 +22,41 @@ const (
 	authTokenCookieName = "authToken"
 )
 
-var (
+var csrfGetter = regexp.MustCompile(`name="` + csrfTokenName + `" type="hidden" value="(.*?)"`)
+
+type App struct {
 	req request.Request
+}
 
-	subdomain string
-	username  string
-	password  string
-	dryRun    bool
+type Config struct {
+	subdomain *string
+	username  *string
+	password  *string
+}
 
-	csrfGetter = regexp.MustCompile(`name="` + csrfTokenName + `" type="hidden" value="(.*?)"`)
-)
+func Flags(fs *flag.FlagSet, prefix string, overrides ...flags.Override) Config {
+	return Config{
+		subdomain: flags.String(fs, prefix, "lucca", "Subdomain", "Subdomain of company", "", overrides),
+		username:  flags.String(fs, prefix, "lucca", "Username", "Username", "", overrides),
+		password:  flags.String(fs, prefix, "lucca", "Subdomain", "Password", "", overrides),
+	}
+}
 
-var rootCmd = &cobra.Command{
-	Use:   "lucca",
-	Short: "Run Lucca action fro the CLI",
-	PersistentPreRunE: func(cmd *cobra.Command, args []string) (err error) {
-		if parent := cmd.Parent(); parent != nil && parent.Name() == "completion" {
-			return
-		}
+func New(config Config) (App, error) {
+	return NewFromValues(*config.subdomain, *config.username, *config.password)
+}
 
-		req = request.Get(fmt.Sprintf(baseURL, subdomain))
+func NewFromValues(subdomain, username, password string) (App, error) {
+	req := request.Get(fmt.Sprintf(baseURL, subdomain))
 
-		authToken, err := getAuthToken(req, username, password)
-		if err != nil {
-			return fmt.Errorf("get token: %w", err)
-		}
+	authToken, err := getAuthToken(req, strings.TrimSpace(username), password)
+	if err != nil {
+		return App{}, fmt.Errorf("get token: %w", err)
+	}
 
-		req = req.Header("Cookie", fmt.Sprintf("%s=%s", authTokenCookieName, authToken))
-
-		return nil
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		principal, err := getPrincipal(req)
-		if err != nil {
-			return fmt.Errorf("principal: %w", err)
-		}
-
-		fmt.Printf("Hello %s\n", principal.FirstName)
-
-		return nil
-	},
+	return App{
+		req: req.Header("Cookie", fmt.Sprintf("%s=%s", authTokenCookieName, authToken)),
+	}, nil
 }
 
 func getAuthToken(req request.Request, username, password string) (string, error) {
@@ -106,24 +101,4 @@ func getAuthToken(req request.Request, username, password string) (string, error
 	}
 
 	return "", errors.New("no auth token found")
-}
-
-func init() {
-	flags := rootCmd.PersistentFlags()
-
-	flags.StringVarP(&subdomain, "subdomain", "", "", "Subdomain")
-	flags.StringVarP(&username, "username", "", "", "Username")
-	flags.StringVarP(&password, "password", "", "", "Password")
-	flags.BoolVarP(&dryRun, "dry-run", "", false, "Dry run")
-
-	rootCmd.AddCommand(birthdaysCmd)
-
-	rootCmd.AddCommand(leaveCmd)
-	initLeave()
-}
-
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintf(os.Stderr, "%s\n", err)
-	}
 }

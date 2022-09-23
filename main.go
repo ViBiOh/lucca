@@ -1,7 +1,7 @@
 package main
 
-import "github.com/ViBiOh/remote-lucca/cmd"
+import "github.com/ViBiOh/remote-lucca/cmd/cli"
 
 func main() {
-	cmd.Execute()
+	cli.Execute()
 }

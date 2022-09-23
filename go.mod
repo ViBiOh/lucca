@@ -3,12 +3,12 @@ module github.com/ViBiOh/remote-lucca
 go 1.19
 
 require (
+	github.com/ViBiOh/flags v1.2.0
 	github.com/ViBiOh/httputils/v4 v4.48.0
 	github.com/spf13/cobra v1.5.0
 )
 
 require (
-	github.com/ViBiOh/flags v1.2.0 // indirect
 	github.com/felixge/httpsnoop v1.0.3 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
