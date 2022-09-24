@@ -5,7 +5,7 @@ ifneq ("$(wildcard .env)","")
 	export
 endif
 
-APP_NAME = remote-lucca
+APP_NAME = lucca
 PACKAGES ?= ./...
 
 MAIN_SOURCE = main.go

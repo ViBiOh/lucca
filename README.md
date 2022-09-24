@@ -1,10 +1,14 @@
-# remote-lucca
+# lucca
+
+[![Build](https://github.com/ViBiOh/lucca/workflows/Build/badge.svg)](https://github.com/ViBiOh/lucca/actions)
+[![codecov](https://codecov.io/gh/ViBiOh/lucca/branch/main/graph/badge.svg)](https://codecov.io/gh/ViBiOh/lucca)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ViBiOh_lucca&metric=alert_status)](https://sonarcloud.io/dashboard?id=ViBiOh_lucca)
 
 ## Getting started
 
 ### Release
 
-Download the latest binary for your os and architecture from the [GitHub Releases page](https://github.com/ViBiOh/remote-lucca/releases)
+Download the latest binary for your os and architecture from the [GitHub Releases page](https://github.com/ViBiOh/lucca/releases)
 
 ```bash
 curl \
@@ -13,15 +17,15 @@ curl \
   --show-error \
   --location \
   --max-time 300 \
-  --output "/usr/local/bin/remote-lucca"
-  https://github.com/ViBiOh/remote-lucca/releases/download/v0.1.0/remote-lucca_$(uname -s | tr "[:upper:]" "[:lower:]")_amd64
-chmod +x "/usr/local/bin/remote-lucca"
+  --output "/usr/local/bin/lucca"
+  https://github.com/ViBiOh/lucca/releases/download/v0.1.0/lucca_$(uname -s | tr "[:upper:]" "[:lower:]")_amd64
+chmod +x "/usr/local/bin/lucca"
 ```
 
 ### Golang
 
 ```bash
-go install "github.com/ViBiOh/remote-lucca@latest"
+go install "github.com/ViBiOh/lucca@latest"
 ```
 
 ## Usage

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ViBiOh/remote-lucca/pkg/lucca"
+	"github.com/ViBiOh/lucca/pkg/lucca"
 	"github.com/spf13/cobra"
 )
 

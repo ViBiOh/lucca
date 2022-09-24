@@ -1,4 +1,4 @@
-module github.com/ViBiOh/remote-lucca
+module github.com/ViBiOh/lucca
 
 go 1.19
 
