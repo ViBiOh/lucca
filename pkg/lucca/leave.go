@@ -27,7 +27,7 @@ type leaveRequestTypeResponse struct {
 	OtherAvailableAccounts []leaveAccount `json:"otherAvailableAccounts"`
 }
 
-type users struct {
+type userIDs struct {
 	IDs []int `json:"userIds"`
 }
 
@@ -35,7 +35,7 @@ type leaveRequestRequest struct {
 	StartOn                string         `json:"startsOn"`
 	EndsOn                 string         `json:"endsOn"`
 	AvailableAccounts      []string       `json:"availableAccounts"`
-	Users                  users          `json:"users"`
+	Users                  userIDs        `json:"users"`
 	OtherAvailableAccounts []leaveAccount `json:"otherAvailableAccounts"`
 	Unit                   int            `json:"unit"`
 	OwnerID                int            `json:"ownerId"`
@@ -87,7 +87,7 @@ func (a App) CreateLeaveRequest(ctx context.Context, ownerID, leaveRequestTpe in
 				Unit:           0,
 			},
 		},
-		Users: users{
+		Users: userIDs{
 			IDs: []int{ownerID},
 		},
 	}

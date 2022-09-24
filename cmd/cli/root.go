@@ -50,6 +50,7 @@ func init() {
 	flags.BoolVarP(&dryRun, "dry-run", "", false, "Dry run")
 
 	rootCmd.AddCommand(birthdaysCmd)
+	rootCmd.AddCommand(companyBirthdaysCmd)
 
 	rootCmd.AddCommand(leaveCmd)
 	initLeave()

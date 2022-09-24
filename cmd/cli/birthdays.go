@@ -12,14 +12,8 @@ import (
 )
 
 type Birthday struct {
-	lucca.Birthday
+	lucca.User
 	BirthdayThisYear time.Time
-}
-
-type Birthdays struct {
-	Data struct {
-		Items []Birthday `json:"items"`
-	} `json:"data"`
 }
 
 // BirthdaysByDate sort Birthday by Date
@@ -61,7 +55,7 @@ var birthdaysCmd = &cobra.Command{
 			}
 
 			items[index] = Birthday{
-				Birthday:         birthday,
+				User:             birthday,
 				BirthdayThisYear: birthdayThisYear,
 			}
 		}
