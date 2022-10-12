@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/ViBiOh/flags v1.2.0
 	github.com/ViBiOh/httputils/v4 v4.49.2
-	github.com/spf13/cobra v1.5.0
+	github.com/spf13/cobra v1.6.0
 )
 
 require (
