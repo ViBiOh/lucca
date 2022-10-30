@@ -12,8 +12,8 @@ import (
 )
 
 type Birthday struct {
-	lucca.User
 	BirthdayThisYear time.Time
+	lucca.User
 }
 
 // BirthdaysByDate sort Birthday by Date

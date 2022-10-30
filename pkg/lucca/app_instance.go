@@ -14,9 +14,9 @@ type Operation struct {
 }
 
 type AppInstance struct {
-	ID            uint        `json:"id"`
 	ApplicationID string      `json:"applicationID"`
 	Permissions   []Operation `json:"permissions"`
+	ID            uint        `json:"id"`
 }
 
 type appinstances struct {
